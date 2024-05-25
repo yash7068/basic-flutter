@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+
+// Main entry point of the application
+void main() {
+  runApp(MyApp());
+}
+
+// The root widget of the application
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Mera Adder', // Title of the application
+
+      home: MyHomePage(), // The main page of the app
+    );
+  }
+}
+
+// A stateful widget to handle the dynamic behavior of the main page
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+// The state for MyHomePage
+class _MyHomePageState extends State<MyHomePage> {
+  // Controllers to handle text input for the two numbers
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+
+  // Variable to store the result of the addition
+  String _result = '';
+
+  // Method to add the two numbers and update the result
+  void _addNumbers() {
+    // Parse the input texts to integers, defaulting to 0 if parsing fails
+    final int num1 = int.tryParse(_controller1.text) ?? 0;
+    final int num2 = int.tryParse(_controller2.text) ?? 0;
+    final int num3 = int.tryParse(_controller3.text) ?? 0;
+
+    // Add the two numbers
+    final int sum = num1 + num2 + num3;
+
+    // Update the result state
+    setState(() {
+      _result = 'Result: $sum';
+    });
+  }
+
+  void _mult() {
+    final int num1 = int.tryParse(_controller1.text) ?? 0;
+    final int num2 = int.tryParse(_controller2.text) ?? 0;
+    final int num3 = int.tryParse(_controller3.text) ?? 0;
+    final int sum = num1 * num2 * num3;
+    setState(() {
+      _result = 'Result: $sum';
+    });
+  }
+
+  void _f() {
+    final int num1 = int.tryParse(_controller1.text) ?? 0;
+    final int num2 = int.tryParse(_controller2.text) ?? 0;
+    final int num3 = int.tryParse(_controller3.text) ?? 0;
+    final int sum = num1 - num2 - num3;
+    setState(() {
+      _result = 'Result: $sum';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Mera App'), // Title in the app bar
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0), // Padding around the content
+        child: Column(
+          children: <Widget>[
+            // Text field for the first number
+            TextField(
+              controller: _controller1,
+              keyboardType:
+                  TextInputType.number, // Set the keyboard type to number
+              decoration: InputDecoration(
+                labelText: 'Enter first number', // Label for the text field
+              ),
+            ),
+            // Text field for the second number
+            TextField(
+              controller: _controller2,
+              keyboardType:
+                  TextInputType.number, // Set the keyboard type to number
+              decoration: InputDecoration(
+                labelText: 'Enter second number', // Label for the text field
+              ),
+            ),
+            TextField(
+              controller: _controller3,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Enter third number',
+              ),
+            ),
+            SizedBox(
+                height:
+                    20), // Add some space between the text fields and the button
+            // Button to trigger the addition
+            ElevatedButton(
+              onPressed: _addNumbers, // Set the onPressed callback
+              child: Text('Add'), // Text on the button
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _mult,
+              child: Text('Multiply'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _f,
+              child: Text('Subtract'),
+            ),
+
+            SizedBox(
+                height:
+                    20), // Add some space between the button and the result text
+            // Text widget to display the result
+            Text(
+              _result,
+              style: TextStyle(fontSize: 20), // Set the text size
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
